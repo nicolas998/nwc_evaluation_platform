@@ -33,13 +33,13 @@ if __name__ == "__main__":
     
     #Opens the necDF
     year = args.year
-    d = netCDF4.Dataset('/mnt/y/flow/NWC_forecast/%d_nwc_short.nc' % year)
+    d = netCDF4.Dataset('/mnt/y/flow/NWC_forecast/%d_nwc_short_upsegment.nc' % year)
     usgs = d['usgs_id'][:]
     uxt = d['issue_time'][:]
     
     #Sets the netCDf with the results
     print('Creating')
-    root = netCDF4.Dataset('%d_nwc_error.nc' % year, 'w', format = 'NETCDF4')
+    root = netCDF4.Dataset('%d_nwc_error_upsegment.nc' % year, 'w', format = 'NETCDF4')
     root.createDimension('station', d.dimensions['station'].size)
     root.createDimension('lead_time', 18)
     root.createDimension('issue_time', d.dimensions['issue_time'].size)

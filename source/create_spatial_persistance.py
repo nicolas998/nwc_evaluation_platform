@@ -64,8 +64,8 @@ def get_parent_flow(usgs_id, year):
 
 year = 2019
 
-usgs_p = pd.read_csv('../data/usgs_parents.csv', usecols=[1,4],dtype = {'to_usgs':str,'from_usgs':'str'}, index_col=0)
-d = netCDF4.Dataset('/mnt/y/flow/NWC_forecast/%d_nwc_short_upsegment.nc' % year)
+usgs_p = pd.read_csv('../data/usgs_parents_v2.csv', usecols=[1,4],dtype = {'to_usgs':str,'from_usgs':'str'}, index_col=0)
+d = netCDF4.Dataset('/mnt/y/flow/NWC_forecast/%d_nwc_short.nc' % year)
 usgs = d['usgs_id'][:]
 uxt = d['issue_time'][:]
 
@@ -74,7 +74,7 @@ if __name__ == "__main__":
 
     #Sets the netCDf with the results
     print('Creating')
-    root = netCDF4.Dataset('%d_spatial_per_simple.nc' % year, 'w', format = 'NETCDF4')
+    root = netCDF4.Dataset('../data/%d_spatial_peristence.nc' % year, 'w', format = 'NETCDF4')
     root.createDimension('station', usgs_p.shape[0])
     root.createDimension('lead_time', 18)
     root.createDimension('issue_time', d.dimensions['issue_time'].size)
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     print('netcdf created')
 
     real_childs = {}
-    for pos, gauge in enumerate(usgs_p.index.values[:10]):
+    for pos, gauge in enumerate(usgs_p.index.values):
         try:
             childs = get_parent_flow(gauge, year)
             error_simple[pos,:,:] = childs['er_chi']
@@ -130,8 +130,8 @@ if __name__ == "__main__":
     #Writes the fiule with the current childs of each gauge (the ones that have records)
     f = open('../data/usgs_actual_parents_%d.csv' % year,'w')
     f.write('to_usgs, from_usgs\n')
-    for i in c.keys():
-        f.write('%s, "%s"\n' % (i, c[i]))
+    for i in real_childs.keys():
+        f.write('%s, "%s"\n' % (i, real_childs[i]))
     f.close()
 
     #Close the netCDF files

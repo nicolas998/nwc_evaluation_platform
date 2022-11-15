@@ -22,14 +22,14 @@ import numpy.ma as ma
 # path_netCDF_er = '/mnt/y/flow/NWC_persistence_rel_error/%d_nwc_error.nc' 
 # path_netCDF_er_up = '/mnt/y/flow/NWC_persistence_rel_error/%d_nwc_error_up.nc' 
 
-path_netCDF = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/platform/data/%d_nwc_short.nc' 
-path_netCDF_up = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/platform/data/%d_nwc_short_upsegment.nc'
-path_netCDF_er = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/platform/data/%d_nwc_error.nc' 
-path_netCDF_er_up = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/platform/data/%d_nwc_error_up.nc' 
+path_netCDF = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/nwc_evaluation_platform/data/%d_nwc_short.nc' 
+path_netCDF_up = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/nwc_evaluation_platform/data/%d_nwc_short_upsegment.nc'
+path_netCDF_er = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/nwc_evaluation_platform/data/%d_nwc_error.nc' 
+path_netCDF_er_up = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/nwc_evaluation_platform/data/%d_nwc_error_up.nc' 
 
 path_usgs = '/mnt/y/flow/USGS_observed/%d/'
-path_usgs_meta = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/platform/data/usgs_joined_rlf.csv'
-path_local_data = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/platform/data/'
+path_usgs_meta = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/nwc_evaluation_platform/data/usgs_joined_rlf.csv'
+path_local_data = '/mnt/c/Users/nicolas/Documents/2022_Witek_web/nwc_evaluation_platform/data/'
 
 plotly_colors = [
     '#000000', # Black
@@ -257,7 +257,7 @@ class misc:
         return fig, pos.shape[0]
     
     def plot_rel_histogram_region(self, reg, lead, met, bmin, bmax, bsize):
-        bins = np.linspace(bmin,bmax,bsize)
+        bins = np.arange(bmin,bmax,bsize)
         u_reg = self.usgs.loc[self.usgs.OBJECTID == reg]
         idx_reg = {}
         for k in self.met_mu_error.keys():
